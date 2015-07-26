@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="col-sm-8 blog-main">
+        <h1>Diary</h1>
+        <span>
+            Order by:
+            <a href="#" ng-click="diary.orderByAttribute = '-Date'">
+                Date <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+            <a href="#" ng-click="diary.orderByAttribute = 'Title'">Title <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span></a>
+        </span>
+
+        <ul class="entry-list">
+            <li class="entry-item"
+                ng-repeat="entry in diary.entries | orderBy: diary.orderByAttribute | startFrom:(diary.currentPage-1)*diary.pageSize | limitTo: diary.pageSize">
+                <div class="entry">
+                    <div class="content">
+                        <div ng-hide="entry.EditorEnabled">
+                            <div class="entry-header">{{ entry.Id }}
+                                <strong>{{ entry.Title }}</strong> <small>{{ entry.Date | date:'yyyy-MM-dd HH:mm:ss' }}</small>
+                            </div>
+                            <p class="entry-text">
+                                {{ entry.Entry }}
+                            </p>
+                            <div class="entry-footer">
+                                <a href="" ng-click="diary.enableEditor(entry.Id)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                                <a href="" ng-click="diary.deleteEntry(entry.Id)"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                            </div>
+                        </div>
+                        <div ng-show="entry.EditorEnabled">
+                            <div class="form-group">
+                                <div class="entry-header">
+                                    <strong><input class="form-control" ng-model="entry.editableTitle" ng-show="entry.EditorEnabled"></strong>
+                                </div>
+                                <p class="entry-text">
+                                    <textarea class="form-control" ng-model="entry.editableEntry" ng-show="entry.EditorEnabled"></textarea>
+                                </p>
+                                <div class="entry-footer">
+                                    <a href="" ng-click="diary.saveEntry(entry.Id)"><span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></a>
+                                    <a href="" ng-click="diary.disableEditor(entry.Id)"><span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <pagination total-items="diary.totalItems"
+                    ng-model="diary.currentPage"
+                    items-per-page="diary.pageSize"></pagination>
+
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+        <div class="sidebar-module sidebar-module-inset">
+            <strong>Diary form</strong>
+            <p>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" name="title" class="form-control" ng-model="diary.newEntry.title" placeholder="Something something" />
+                    <label for="entry">Entry:</label>
+                    <textarea name="entry" class="form-control" rows="3" ng-model="diary.newEntry.entry" placeholder="Dear diary..."></textarea>
+                </div>
+                <button ng-click="diary.addEntry()" type="button" class="btn btn-sm btn-success">+Add entry</button>
+            </p>
+            <div class="alert alert-success animate" ng-if="showSuccess">
+                <a href="#" class="close" data-dismiss="alert" aria-label="hide">&times;</a>
+                <strong>Success!</strong> Diary entry added successfully!
+            </div>
+        </div>
+        <hr />
+        <div class="sidebar-module sidebar-module-inset">
+            <strong>User managment</strong>
+            <p>
+                <a ui-sref="logout">logout</a>
+            </p>
+            <p>
+                <form>
+                    <input type="file" ng-file-select="onFileSelect($files)">
+                </form>
+                <b>Avatar:</b><br />
+                <i ng-hide="diary.imageSrc">No image chosen</i>
+                <img height="200" ng-src="{{ diary.imageSrc }}" />
+            </p>
+        </div>
+    </div>
+</div>
+
+

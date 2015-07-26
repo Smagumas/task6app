@@ -1,0 +1,57 @@
+﻿$animation-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+$animation-scaleYfrom: scaleY(0);
+$animation-scaleYto: scaleY(1);
+$font-color: #fff;
+
+.animate.ng-enter,
+.animate.ng-leave {
+    -webkit-transition: $animation-transition;
+    -moz-transition: $animation-transition;
+    -ms-transition: $animation-transition;
+    -o-transition: $animation-transition;
+    transition: $animation-transition;
+    position: relative;
+}
+
+.animate.ng-leave.animate.ng-leave-active,
+.animate.ng-enter {
+    -webkit-transform: $animation-scaleYfrom;
+    -moz-transform: $animation-scaleYfrom;
+    -ms-transform: $animation-scaleYfrom;
+    -o-transform: $animation-scaleYfrom;
+    transform: $animation-scaleYfrom;
+    height: 0px;
+    opacity: 0;
+}
+
+.animate.ng-enter.ng-enter-active,
+.animate.ng-leave {
+    -webkit-transform: $animation-scaleYto;
+    -moz-transform: $animation-scaleYto;
+    -ms-transform: $animation-scaleYto;
+    -o-transform: $animation-scaleYto;
+    transform: $animation-scaleYto;
+    height: 30px;
+    opacity: 1;
+}
+
+.entry-list {
+    list-style: none;
+    padding: 0;
+}
+
+.entry-item {
+    background: #fff;
+    border: 1px solid #e1e8ed;
+}
+.entry:hover {
+    background-color: #f5f8fa;
+}
+
+.content {
+    padding: 5px;
+}
+
+.entry-header small {
+    color: #8899a6;
+}
